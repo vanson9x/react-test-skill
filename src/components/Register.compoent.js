@@ -24,7 +24,12 @@ export default class RegisterComponent extends Component {
             username: new MyFormControlValidateStore([
                 Validations.required(),
                 Validations.minLength(8),
-                Validations.maxLength(32)
+                Validations.maxLength(16)
+            ]),
+            password: new MyFormControlValidateStore([
+                Validations.required(),
+                Validations.minLength(8),
+                Validations.maxLength(24)
             ])
         };
     }
@@ -37,13 +42,19 @@ export default class RegisterComponent extends Component {
     // Event submit form.
     onSubmit = (event) => {
         this.validated = false;
+        let valid = true;
         Object.keys(this.registerForm).map((key) => {
             if (!this.registerForm[key].checkValidate()) {
-                console.log('Invalid');
+                valid = false;
             }
         });
-        this.validated = true;
-        event.preventDefault();
+
+        if (valid) {
+            alert('hehe');
+        } else {
+            this.validated = true;
+            event.preventDefault();
+        }
     };
 
     render() {
@@ -76,26 +87,32 @@ export default class RegisterComponent extends Component {
                                         <Form.Control as="input"
                                                       isInvalid={this.emailCtrl.isInValid}
                                                       onChange={e => this.emailCtrl.checkValidate()}
-                                                      ref={this.registerForm.email.ref} type="email"/>
+                                                      ref={this.emailCtrl.ref} type="email"/>
                                         {this.emailCtrl.error.required &&
                                         <Form.Control.Feedback type="invalid">Email không hợp
                                             lệ.</Form.Control.Feedback>}
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className="small">Tài khoản</Form.Label>
-                                        <Form.Control as="input" type="text"/>
-                                        <Form.Control.Feedback type="invalid">
+                                        <Form.Control as="input"
+                                                      isInvalid={this.usernameCtrl.isInValid}
+                                                      onChange={e => this.usernameCtrl.checkValidate()}
+                                                      ref={this.usernameCtrl.ref}
+                                                      type="text"/>
+                                        {this.usernameCtrl.error.required && <Form.Control.Feedback type="invalid">
                                             Không được bỏ trống.
-                                        </Form.Control.Feedback>
+                                        </Form.Control.Feedback>}
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label className="small">Mật khẩu</Form.Label>
-                                        <Form.Control as="input" type="password"/>
+                                        <Form.Control as="input"
+                                                      isInvalid={this.passwordCtrl.isInValid}
+                                                      onChange={e => this.passwordCtrl.checkValidate()}
+                                                      ref={this.passwordCtrl.ref}
+                                                      type="password"/>
+                                        {this.passwordCtrl.error.required &&
                                         <Form.Control.Feedback type="invalid">Không được bỏ
-                                            trống.</Form.Control.Feedback>
-                                    </Form.Group>
-                                    <Form.Group>
-                                        <Form.Check className="small" type="checkbox" label="Ghi nhớ tài khoản"/>
+                                            trống.</Form.Control.Feedback>}
                                     </Form.Group>
                                     <Form.Group>
                                         <Button className="w-100" variant="primary" type="submit">Đăng ký</Button>
@@ -126,7 +143,7 @@ export default class RegisterComponent extends Component {
         return this.registerForm.username;
     }
 
-    get password() {
+    get passwordCtrl() {
         return this.registerForm.password;
     }
 }

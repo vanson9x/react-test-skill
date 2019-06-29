@@ -9,7 +9,6 @@ class _Validations {
         }
     }
 
-    // Length
     static minLength(number) {
         return {
             type: 'minLength',
