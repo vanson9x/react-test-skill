@@ -18,7 +18,7 @@ export default class NavigationBarComponent extends Component {
 
         // variable dom when logined.
         const authentTemp = <Fragment>
-            <label className="font-weight-bold">Xin chào! {store.fullname}</label>
+            <label className="font-weight-bold text-white">Xin chào! {store.fullname}</label>
             <Button size="sm" className="mx-2" variant="outline-danger"
                     onClick={store.logout}>
                 <i className="fas fa-sign-out-alt" aria-hidden="true"></i></Button>

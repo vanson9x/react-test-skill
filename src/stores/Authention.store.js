@@ -12,13 +12,12 @@ class AuthentionStore {
 
     @action.bound
     logout() {
-        this.token = "";
+        this.token = this.fullname = this.email = "";
     }
 
-    // login(username) {
-    //     this.username = this.token = "hehe";
-    //     this.fullname = this.token = "Phạm Văn Sơn";
-    // }
+    setUsername = (username) => this.username = username;
+    setToken = (token) => this.token = token;
+    setFullName = (name) => this.fullname = name;
 }
 
 const store = new AuthentionStore();

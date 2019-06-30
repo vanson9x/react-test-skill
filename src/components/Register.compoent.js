@@ -4,9 +4,11 @@ import {Link} from "react-router-dom";
 import {computed, observable} from "mobx";
 import {observer} from "mobx-react";
 import axios from "axios";
+import md5 from "md5";
 
 import "./Register.component.scss";
 import MyFormControlValidateStore, {Validations} from "../stores/MyFormValidate.store";
+import MyToast from "../stores/MyToast.store";
 
 @observer
 export default class RegisterComponent extends Component {
@@ -36,25 +38,27 @@ export default class RegisterComponent extends Component {
 
     // Event submit form.
     onSubmit = (event) => {
-        axios.get('http://localhost:3000/test')
-            .then(response => {
-                console.log(response);
-            });
-        event.preventDefault();
-        /*this.validated = false;
+        this.validated = false;
         let valid = true;
         Object.keys(this.registerForm).map((key) => {
             if (!this.registerForm[key].checkValidate()) {
                 valid = false;
             }
         });
-
         if (valid) {
-            alert('hehe');
-        } else {
-            this.validated = true;
-            event.preventDefault();
-        }*/
+            axios.post('http://localhost:3000/register', {
+                username: this.usernameCtrl.ref.current.value,
+                password: md5(this.passwordCtrl.ref.current.value),
+                fullname: this.fullNameCrtl.ref.current.value,
+                email: this.emailCtrl.ref.current.value
+            })
+                .then(res => {
+                    const {data} = res;
+                    if (data.code === 200) MyToast.push('Đăng ký thành công', 3000);
+                    else MyToast.push(data.message);
+                });
+        } else this.validated = true;
+        event.preventDefault();
     };
 
     render() {
