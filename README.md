@@ -4,6 +4,6 @@
 <h2>#Run server test</h2>
 <p>$npm run server</p>
 <h2>#Run project</h2>
-<p>$npm run start</p>
+<p>$npm start</p>
 <h2>#Run build project</h2>
 <p>$npm run build</p>
