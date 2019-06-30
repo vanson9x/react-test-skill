@@ -22,6 +22,17 @@ class _Validations {
             isValid: (source, _number = number) => source && source.length <= _number ? true : false
         }
     };
+
+    static regexp = (pattern) => {
+        return {
+            type: 'regexp',
+            isValid: (source, _pattern = pattern) => {
+                if (!source) return false;
+                const re = new RegExp(_pattern);
+                return re.test(source);
+            }
+        }
+    }
 }
 
 export const Validations = _Validations;
@@ -32,6 +43,7 @@ export default class MyFormControlValidateStore {
         required: false,
         minLength: false,
         maxLength: false,
+        regexp: false
     };
 
     constructor(array_validate) {
